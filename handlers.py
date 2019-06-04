@@ -86,12 +86,28 @@ def update():
                                 db.handlers.find_one_and_update({'h_id': h_id},
                                                                 {"$set": {hattrib: data[hattrib]}})
                 if len(data) == 2:
-                        response = {'status': "Handler ID found, attribute " + hattrib + " updated", 'code': 100}
+                        response = {'status': "Handler ID found, attribute updated", 'code': 100}
                 else:
                         response = {'status': "Handler ID found, attributes updated", 'code': 100}
                         
         else:
                 response = {'status': "Handler ID not found, attributes could not be updated", 'code': 101}
+        return jsonify(response)
+
+## cru[D]
+@app.route('/api/v1/delete', methods=["DELETE"])
+def delete():
+        print("FUNCTION: DELETE/DELETE")
+
+        data = request.args
+        h_id = data['h_id']
+
+        hid_exists = db.handlers.find_one({'h_id': h_id})
+        if hid_exists:
+                db.handlers.delete_one({'h_id': h_id})
+                response = {'status': "Handler deleted", 'code': 100}
+        else:
+                response = {'status': "Handler ID not found, no delete operation performed", 'code': 101}
         return jsonify(response)
         
 if __name__ == "__main__":
