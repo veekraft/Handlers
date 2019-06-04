@@ -1,15 +1,9 @@
-##Create - request.json
-##Read - request.args
-##Update - request.json
-##Delete - request.form
-
 from flask import Flask, jsonify, request, abort
 import os, json, pymongo
 
 app = Flask(__name__)
 
 ## Connect to MongoDB
-print "\n## Establish the connection and aim at a specific database"
 if 'VCAP_SERVICES' in os.environ:
         VCAP_SERVICES = json.loads(os.environ['VCAP_SERVICES'])
         MONCRED = VCAP_SERVICES["mlab"][0]["credentials"]
@@ -22,10 +16,16 @@ else:
 ## Connect to DB instance
 db = client[DB_NAME]
 
+## Test webserver
+@app.route('/api/v1/status',methods=['GET'])
+def status():
+    response = {'status' : 'Up and running', 'code': 100}
+    return jsonify(response)
+
 ## [C]rud
 @app.route('/api/v1/create', methods=["POST"])
 def create():
-        print("FUNCTION: CREATE/POST")
+##        print("FUNCTION: CREATE/POST")
         if not request.json:
                 abort(400)
 
@@ -48,7 +48,7 @@ def create():
 ## c[R]ud
 @app.route('/api/v1/read', methods=["GET"])
 def read():
-        print("FUNCTION: READ/GET")
+##        print("FUNCTION: READ/GET")
         
         data = request.args
         h_id = data['h_id']
@@ -68,7 +68,7 @@ def read():
 ## cr[U]d
 @app.route('/api/v1/update', methods=["PUT"])
 def update():
-        print("FUNCTION: UPDATE/PUT")
+##        print("FUNCTION: UPDATE/PUT")
         if not request.json:
                 abort(400)
 
@@ -99,7 +99,7 @@ def update():
 ## cru[D]
 @app.route('/api/v1/delete', methods=["DELETE"])
 def delete():
-        print("FUNCTION: DELETE/DELETE")
+##        print("FUNCTION: DELETE/DELETE")
 
         data = request.args
         h_id = data['h_id']
