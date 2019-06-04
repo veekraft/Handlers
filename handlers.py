@@ -53,15 +53,17 @@ def read():
         data = request.args
         h_id = data['h_id']
 
-        handler_details = db.handlers.find_one({'h_id': h_id})
-        h_name = handler_details[u'h_name']
-        h_picture = handler_details[u'h_picture']
-        h_servicedogid = handler_details[u'h_servicedogid']
-        h_trainerorg = handler_details[u'h_trainerorg']
-        print(h_id, h_name, h_picture, h_servicedogid, h_trainerorg)
-
-        handler = {'h_id': h_id, 'h_name': h_name, 'h_picture': h_picture, 'h_servicedogid': h_servicedogid, 'h_trainerorg': h_trainerorg}
-        return jsonify(handler)
+        h_exists = db.handlers.find_one({'h_id': h_id})
+        if h_exists:
+                h_name = h_exists[u'h_name']
+                h_picture = h_exists[u'h_picture']
+                h_servicedogid = h_exists[u'h_servicedogid']
+                h_trainerorg = h_exists[u'h_trainerorg']
+                print(h_id, h_name, h_picture, h_servicedogid, h_trainerorg)
+                response = {'h_id': h_id, 'h_name': h_name, 'h_picture': h_picture, 'h_servicedogid': h_servicedogid, 'h_trainerorg': h_trainerorg}
+        else:
+                response = {'status': "Handler does not exist", 'code': 101}
+        return jsonify(response)
 
 ## cr[U]d
 @app.route('/api/v1/update', methods=["PUT"])
