@@ -19,8 +19,9 @@ db = client[DB_NAME]
 ## Test webserver
 @app.route('/api/v1/status',methods=['GET'])
 def status():
-    response = {'status' : 'Up and running', 'code': 100}
-    return jsonify(response)
+    response = {'status': "Handlers API up & running"}
+    statuscode = 200
+    return jsonify(response), statuscode
 
 ## [C]rud - Add
 @app.route('/api/v1/create', methods=["POST"])
@@ -62,11 +63,14 @@ def read():
                 h_picture = h_exists[u'h_picture']
                 h_servicedogid = h_exists[u'h_servicedogid']
                 h_trainerorg = h_exists[u'h_trainerorg']
-                print(h_id, h_name, h_picture, h_servicedogid, h_trainerorg)
+##                print(h_id, h_name, h_picture, h_servicedogid, h_trainerorg)
                 response = {'h_id': h_id, 'h_name': h_name, 'h_picture': h_picture, 'h_servicedogid': h_servicedogid, 'h_trainerorg': h_trainerorg}
+                statuscode = 200
         else:
-                response = {'status': "Handler does not exist", 'code': 101}
-        return jsonify(response)
+                response = {'status': "From Handler API: handler not found"}
+                statuscode = 400
+                                
+        return jsonify(response), statuscode
 
 ## cr[U]d
 @app.route('/api/v1/update', methods=["PUT"])
