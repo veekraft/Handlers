@@ -41,13 +41,13 @@ def create():
         h_exists = db.handlers.find_one({'h_id': h_id})
         if not h_exists:
                 db.handlers.insert_one({'h_id': h_id, 'h_name': h_name, 'h_picture': h_picture, 'h_servicedogid': h_servicedogid, 'h_trainerorg': h_trainerorg})
-##                response = {'status': "Handler added", 'code': 100}
-                response = {'status_code': 200}
+                response = {'status': "Handler added"}
+                statuscode = 200
 
         else:
-##                response = {'status': "Handler ID already exists, request not processed", 'code': 101}
-                response = {'status_code': 201}
-        return jsonify(response)
+                response = {'status': "Handler ID already exists, request not processed"}
+                status_code = 201
+        return jsonify(response), statuscode
 
 ## c[R]ud
 @app.route('/api/v1/read', methods=["GET"])
@@ -68,7 +68,7 @@ def read():
                 statuscode = 200
         else:
                 response = {'status': "From Handler API: handler not found"}
-                statuscode = 400
+                statuscode = 201
                                 
         return jsonify(response), statuscode
 
