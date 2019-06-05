@@ -22,7 +22,7 @@ def status():
     response = {'status' : 'Up and running', 'code': 100}
     return jsonify(response)
 
-## [C]rud
+## [C]rud - Add
 @app.route('/api/v1/create', methods=["POST"])
 def create():
 ##        print("FUNCTION: CREATE/POST")
@@ -40,9 +40,12 @@ def create():
         h_exists = db.handlers.find_one({'h_id': h_id})
         if not h_exists:
                 db.handlers.insert_one({'h_id': h_id, 'h_name': h_name, 'h_picture': h_picture, 'h_servicedogid': h_servicedogid, 'h_trainerorg': h_trainerorg})
-                response = {'status': "Handler added", 'code': 100}
+##                response = {'status': "Handler added", 'code': 100}
+                response = {'status_code': 200}
+
         else:
-                response = {'status': "Handler ID already exists, request not processed", 'code': 101}
+##                response = {'status': "Handler ID already exists, request not processed", 'code': 101}
+                response = {'status_code': 201}
         return jsonify(response)
 
 ## c[R]ud
