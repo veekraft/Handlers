@@ -118,10 +118,12 @@ def delete():
         hid_exists = db.handlers.find_one({'h_id': h_id})
         if hid_exists:
                 db.handlers.delete_one({'h_id': h_id})
-                response = {'status': "Handler deleted", 'code': 100}
+                response = {'status': "Handler deleted"}
+                statuscode = 200
         else:
-                response = {'status': "Handler ID not found, no delete operation performed", 'code': 101}
-        return jsonify(response)
+                response = {'status': "Handler ID not found, no delete operation performed"}
+                statuscode = 201
+        return jsonify(response),statuscode
         
 if __name__ == "__main__":
         app.run(debug=False, host='0.0.0.0', port=int(os.getenv('PORT', '5000')), threaded=True)
