@@ -26,11 +26,12 @@ def status():
 ## [C]rud - Add
 @app.route('/api/v1/create', methods=["POST"])
 def create():
-##        print("FUNCTION: CREATE/POST")
+        print("FUNCTION: CREATE/POST")
         if not request.json:
                 abort(400)
 
         data = request.json
+        print data
 
         h_id = data['h_id']
         h_name = data['h_name']
