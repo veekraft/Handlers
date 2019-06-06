@@ -87,7 +87,7 @@ def update():
         hid_exists = db.handlers.find_one({'h_id': h_id})
         if hid_exists:
 
-        ## Work on the keys in json input
+                ## Work on the keys in json input
                 for hattrib in data:
                         ## Check to see whether the attribute we're working on is h_id
                         ## h_id may not be modified, all other attribs may be modified
@@ -96,13 +96,16 @@ def update():
                                 db.handlers.find_one_and_update({'h_id': h_id},
                                                                 {"$set": {hattrib: data[hattrib]}})
                 if len(data) == 2:
-                        response = {'status': "Handler ID found, attribute updated", 'code': 100}
+                        response = {'status': "Handler ID found, attribute updated"}
+                        statuscode = 200
                 else:
-                        response = {'status': "Handler ID found, attributes updated", 'code': 100}
+                        response = {'status': "Handler ID found, attributes updated"}
+                        statuscode = 200
                         
         else:
-                response = {'status': "Handler ID not found, attributes could not be updated", 'code': 101}
-        return jsonify(response)
+                response = {'status': "Handler ID not found, attributes could not be updated"}
+                statuscode = 201
+        return jsonify(response),statuscode
 
 ## cru[D]
 @app.route('/api/v1/delete', methods=["DELETE"])
