@@ -16,10 +16,10 @@ else:
 ## Connect to DB instance
 db = client[DB_NAME]
 
-## Test self
-@app.route('/api/v1/mystatus',methods=['GET'])
-def mystatus():
-    response = {'status': "handlers API up & running"}
+## Test Handlers status
+@app.route('/api/v1/handler/hstatus', methods=["GET"])
+def hstatus():
+    response = {'status': "Handlers API up and running"}
     statuscode = 200
     return jsonify(response),statuscode
 
