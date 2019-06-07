@@ -16,12 +16,12 @@ else:
 ## Connect to DB instance
 db = client[DB_NAME]
 
-## Test webserver
-@app.route('/api/v1/status',methods=['GET'])
-def status():
-    response = {'status': "Handlers API up & running"}
+## Test self
+@app.route('/api/v1/mystatus',methods=['GET'])
+def mystatus():
+    response = {'status': "handlers API up & running"}
     statuscode = 200
-    return jsonify(response), statuscode
+    return jsonify(response),statuscode
 
 ## [C]rud - Add
 @app.route('/api/v1/create', methods=["POST"])
